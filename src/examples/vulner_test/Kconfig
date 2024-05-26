@@ -1,0 +1,5 @@
+menuconfig EXAMPLES_VULNER_TEST
+	bool "vulner_Test"
+	default n
+	---help---
+		Enable support for vulner_test

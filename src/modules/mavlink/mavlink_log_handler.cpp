@@ -344,6 +344,14 @@ MavlinkLogHandler::_get_entry(int idx, uint32_t &size, uint32_t &date, char *fil
 	//-- Open list of log files
 	FILE *f = ::fopen(kLogData, "r");
 
+	//TEST CODE
+	PX4_INFO("[VULNER_TEST] - called 'MavlinkLogHandler::_get_entry()', idx: %d", idx);
+	;
+
+
+
+
+
 	if (f) {
 		//--- Find requested entry
 		char line[160];
@@ -355,6 +363,7 @@ MavlinkLogHandler::_get_entry(int idx, uint32_t &size, uint32_t &date, char *fil
 				char file[160];
 
 				if (sscanf(line, "%" PRIu32 " %" PRIu32 " %s", &date, &size, file) == 3) {
+					PX4_INFO("[VULNER_TEST] stelen(file): %d", (int)strlen(file));
 					if (filename && filename_len > 0) {
 						strncpy(filename, file, filename_len);
 						filename[filename_len - 1] = 0; // ensure null-termination
@@ -455,6 +464,7 @@ MavlinkLogHandler::_init_list_helper()
 
 	// Create work file
 	FILE *f = ::fopen(kTmpData, "w");
+	PX4_INFO("[VULNER_TEST] - at 'MavlinkLogHandler::_init_list_helper()', kTmpData opend");
 
 	if (!f) {
 		PX4LOG_WARN("MavlinkLogHandler::init Error creating %s", kTmpData);
@@ -482,12 +492,14 @@ MavlinkLogHandler::_init_list_helper()
 
 	closedir(dp);
 	fclose(f);
+	PX4_INFO("[VULNER_TEST] - at 'MavlinkLogHandler::_init_list_helper()', kTmpData closed");
 
 	// Rename temp file to data file
 	if (rename(kTmpData, kLogData)) {
 		PX4LOG_WARN("MavlinkLogHandler::init Error renaming %s", kTmpData);
 		_log_count = 0;
 	}
+	PX4_INFO("[VULNER_TEST] - at 'MavlinkLogHandler::_init_list_helper()', kTmpData renamed to kLogData");
 }
 
 //-------------------------------------------------------------------
